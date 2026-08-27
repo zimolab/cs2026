@@ -27,6 +27,15 @@ namespace readonlydemo;
 // [访问修饰符] static readonly 类型 字段名;
 // [访问修饰符] static readonly 类型 字段名 = 初始值;
 
+
+// reaonly vs const
+// 赋值时机：readonly在运行时，可以在声明处或者构造函数中赋值；const是在编译时赋值，值必须是字面量
+// 类型限制：readonly字段支持任意类型；const只支持基本类型和string
+// static：readonly可以是实例的也可以是静态的，当为静态时需要显式声明为 static；const是隐式static的
+// 能否用于局部变量：readonly只能用于字段；const可以用于字段，也可以用于局部变量
+// 公共API安全性：readonly是安全的（因为它是运行时读取的）；const是不安全的（因为它是编译时直接嵌入值到调用方的，如果const值修改了，调用方要重新编译）
+// 内存占用：readonly存在内存占用，因为存在字段存储位置；const将值直接嵌入调用方IL，无内存占用
+
 // 演示实例readonly字段（模拟依赖注入的场景）
 internal class OrderProcessor
 {
