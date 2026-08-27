@@ -27,7 +27,7 @@ namespace readonlydemo;
 // [访问修饰符] static readonly 类型 字段名;
 // [访问修饰符] static readonly 类型 字段名 = 初始值;
 
-// 实例readonly字段（模拟依赖注入的场景）
+// 演示实例readonly字段（模拟依赖注入的场景）
 internal class OrderProcessor
 {
 
@@ -117,6 +117,27 @@ internal class OrderProcessor
 }
 
 
+// 演示静态readonly字段（可以用于全局单例值，以替代跨程序集的const）
+
+public class GlobalSettings
+{
+    public static readonly string DefaultLanguage = "en";
+    public static readonly int MaxConnections = 100;
+    // readonly字段可以是任何类型，包括复杂的引用类型
+    public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(30);
+
+    // 模拟单例
+    private GlobalSettings() // 私有构造函数，防止外部实例化
+    {
+
+    }
+
+    // 静态readonly字段，用于存储单例实例
+    public static readonly GlobalSettings Instance = new();
+
+
+}
+
 
 
 internal class Program
@@ -138,5 +159,14 @@ internal class Program
         orderProcessor.RemoveItem("Apple");
         orderProcessor.ListItems();
         orderProcessor.ProcessOrder();
+
+        // 访问静态readonly字段
+        Console.WriteLine($"Default Language: {GlobalSettings.DefaultLanguage}");
+        Console.WriteLine($"Max Connections: {GlobalSettings.MaxConnections}");
+        Console.WriteLine($"Default Timeout: {GlobalSettings.DefaultTimeout}");
+        // 获取单例实例
+        var settings = GlobalSettings.Instance;
+        Console.WriteLine($"Instance ID: {settings.GetHashCode()}");
+
     }
 }
